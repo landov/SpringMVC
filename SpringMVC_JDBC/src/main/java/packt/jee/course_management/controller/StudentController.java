@@ -31,7 +31,7 @@ public class StudentController {
 		List<Student> students = entityService.getEntities(Student.class);
 		List<StudentDTO> studentDTOs = new ArrayList<StudentDTO>();
 		for (Student student : students) {
-			StudentDTO studentDTO = studentConverter(student);
+			StudentDTO studentDTO = studentConverter(student, false);
 			studentDTOs.add(studentDTO);
 		}
 		model.addAttribute("students", studentDTOs);
@@ -52,7 +52,7 @@ public class StudentController {
 	{
 		Student student;
 		try { 
-			student = studentConverter(studentDTO);
+			student = studentConverter(studentDTO, true);
 			student.setEnrolledsince(new Date());
 			//System.out.println(student.getEnrolledsince().toString());
 			if (student.getId() == 0) {
@@ -70,7 +70,7 @@ public class StudentController {
 	@RequestMapping("/student/update/{id}")
 	public String updateStudent (@PathVariable int id, Model model) {
 		Student student = entityService.getEntity(Student.class, id);
-		StudentDTO studentDTO = studentConverter(student);
+		StudentDTO studentDTO = studentConverter(student, false);
 		model.addAttribute("student", studentDTO);
 		model.addAttribute("title", "Update Student");
 		return "addStudent";
@@ -80,7 +80,7 @@ public class StudentController {
 	@RequestMapping("/student/enroll/{id}")
 	public String enrollStudent (@PathVariable int id, Model model) {
 		Student student = entityService.getEntity(Student.class, id);
-		StudentDTO studentDTO = studentConverter(student);
+		StudentDTO studentDTO = studentConverter(student, true);
 		model.addAttribute("student", studentDTO);
 		List<CourseDTO> allCourses = courseController.courseListConverter(entityService.getEntities(Course.class)); 
 		model.addAttribute("allCourses", allCourses);
@@ -94,7 +94,15 @@ public class StudentController {
 			System.out.println(course.getName()+course.isChecked());
 		}*/
 		System.out.println(studentDTO.toString());
-		System.out.println("doEnroll");
+		System.out.println(studentDTO.getId());
+		Student student = studentConverter(studentDTO, true);
+		// List<Course> courses = new ArrayList<Course>();
+		List<Course> courses = courseController.courseListConverter(studentDTO.getCourses(), false);
+		for (Course course : courses) {
+			System.out.println(course.getName());
+		}
+		student.setCourses(courses);
+		entityService.updateEntity(student);
 		return "redirect:/students";
 	}
 	
@@ -105,36 +113,32 @@ public class StudentController {
 		return "redirect:/students";
 	}
 	
-	private Student studentConverter(StudentDTO studentDTO) {
+	private Student studentConverter(StudentDTO studentDTO, boolean update) {
 		Student student;
 		if (studentDTO.getId() == 0) {
 			student = new Student();			
+			update = true;
 		} else {
 			student = entityService.getEntity(Student.class, studentDTO.getId());			
 		}
-		student.setFirstName(studentDTO.getFirstName());
-		student.setLastName(studentDTO.getLastName());
-		student.setEnrolledsince(studentDTO.getEnrolledsince());
+		if(update) {
+			student.setFirstName(studentDTO.getFirstName());
+			student.setLastName(studentDTO.getLastName());
+			student.setEnrolledsince(studentDTO.getEnrolledsince());
+		}
 		return student;
 	}
 	
-	private StudentDTO studentConverter(Student student) {
+	public StudentDTO studentConverter(Student student, boolean addCourses) {
 		StudentDTO studentDTO = new StudentDTO();	
 		studentDTO.setId(student.getId());
 		studentDTO.setFirstName(student.getFirstName());
 		studentDTO.setLastName(student.getLastName());
 		studentDTO.setEnrolledsince(student.getEnrolledsince());
-		List<Course> courses = student.getCourses();
-		studentDTO.setCourses(courseController.courseListConverter(courses));
-	/*	for(Course course : courses){
-			CourseDTO courseDTO = courseController.courseConverter(course);
-			if (student.getCourses().contains(course)){
-				courseDTO.setChecked(true);
-			}
-			studentDTO.getCourses().add(courseDTO);
-			System.out.println(courseDTO.getName() + " stdConv");
-		}*/
-		System.out.println(studentDTO.getCourses().toString());
+		if (addCourses) {
+			List<Course> courses = student.getCourses();
+			studentDTO.setCourses(courseController.courseListConverter(courses));
+		}
 		return studentDTO;
 	}
 }

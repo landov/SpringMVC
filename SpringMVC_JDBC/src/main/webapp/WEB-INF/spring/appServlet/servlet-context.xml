@@ -10,7 +10,7 @@
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
-	<annotation-driven />
+	<annotation-driven conversion-service="conversionService" />
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
@@ -38,9 +38,9 @@
 	
 	<beans:bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
 		<beans:property name="converters">
-      		<beans:set>
+      		<beans:list>
         		<beans:bean class="packt.jee.course_management.service.CourseConverter" />
-      		</beans:set>
+      		</beans:list>
    		</beans:property>
 	</beans:bean>
 	

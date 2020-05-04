@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import packt.jee.course_management.dto.CourseDTO;
+import packt.jee.course_management.dto.StudentDTO;
 import packt.jee.course_management.dto.TeacherDTO;
 import packt.jee.course_management.entity.Course;
+import packt.jee.course_management.entity.Student;
 import packt.jee.course_management.entity.Teacher;
 import packt.jee.course_management.service.GenericService;
 
@@ -21,6 +23,8 @@ public class CourseController {
 
 	@Autowired
 	GenericService entityService;
+	@Autowired
+	StudentController studentController;
 	
 	@RequestMapping(value = "/courses")
 	public String getCourses (Model model) {
@@ -49,7 +53,7 @@ public class CourseController {
 	{
 		Course course;
 		try { 
-			course = courseConverter(courseDTO);
+			course = courseConverter(courseDTO, true);
 			if (course.getId() == 0) {
 				entityService.addEntity(course);
 			} else {				
@@ -79,6 +83,13 @@ public class CourseController {
 		Course course = entityService.getEntity(Course.class, id);
 		CourseDTO courseDTO = courseConverter(course);
 		model.addAttribute("course", courseDTO);
+		List<Student> students = course.getStudents();
+		List<StudentDTO> studentDTOs = new ArrayList<StudentDTO>();
+		for (Student student : students) {
+			StudentDTO studentDTO = studentController.studentConverter(student, false);
+			studentDTOs.add(studentDTO);
+		}
+		model.addAttribute("students", studentDTOs);
 		return "courseDetails";
 
 	}
@@ -90,22 +101,25 @@ public class CourseController {
 		return "redirect:/courses";
 	}
 	
-	public Course courseConverter(CourseDTO courseDTO) {
+	public Course courseConverter(CourseDTO courseDTO, boolean update) {
 		Course course;
 		if (courseDTO.getId() == 0) {
 			course = new Course();
+			update = true;
 			
 		} else {
 			course = entityService.getEntity(Course.class, courseDTO.getId());			
 		}
-		course.setName(courseDTO.getName());
-		course.setCredits(courseDTO.getCredits());				
-		Teacher teacher;
-		teacher = entityService.getEntity(Teacher.class, courseDTO.getTeacherId());
-		course.setTeacher(teacher);
+		if (update) {
+			course.setName(courseDTO.getName());
+			course.setCredits(courseDTO.getCredits());				
+			Teacher teacher;
+			teacher = entityService.getEntity(Teacher.class, courseDTO.getTeacherId());
+			course.setTeacher(teacher);
+		}
 		return course;
 	}
-	
+		
 	public CourseDTO courseConverter(Course course) {
 		
 		CourseDTO courseDTO = new CourseDTO();	
@@ -129,5 +143,14 @@ public class CourseController {
 			courseDTOs.add(courseConverter(course));
 		}
 		return courseDTOs;
+	}
+	
+	public List<Course> courseListConverter(List<CourseDTO> courseDTOs, boolean update){
+		List<Course> courses = new ArrayList<Course>();
+		for (CourseDTO courseDTO : courseDTOs) {
+			Course course = courseConverter(courseDTO, false);
+			courses.add(course);
+		}
+		return courses;
 	}
 }

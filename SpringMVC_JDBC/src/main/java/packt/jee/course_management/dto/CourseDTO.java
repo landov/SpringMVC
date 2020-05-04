@@ -32,6 +32,11 @@ public class CourseDTO {
 		return true;
 	}
 	
+	@Override
+	public String toString() {
+		return Integer.toString(id);
+	}
+	
 	public CourseDTO() {
 		super();
 		// TODO Auto-generated constructor stub

@@ -21,9 +21,7 @@
 	<c:if test="${not empty error}"> 
 		<span style="color:red;">${error}<br></span> 
 	</c:if> 
-	<c:set var="actionPath" value="${pageContext.request.contextPath}/doAddCourse"/> 
-	<form method="post" action="${actionPath}"> 
-		<table> 
+	<table> 
 		<tr>
 			<th colspan="2">Course details:</th>
 			
@@ -40,9 +38,11 @@
 			<tr> 
 				<th colspan="2">Enrolled students:</th>
 			</tr> 
-		</table> 
-		<input type="hidden" name="id" value="${course.id}"> 
-	</form>
-		
+			<c:forEach items="${students}" var="student">
+				<tr><td = colspan="2">
+					${student.firstName} ${student.lastName}
+				</td></tr>
+			</c:forEach>
+	</table> 		
 </body>
 </html>

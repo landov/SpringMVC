@@ -44,19 +44,24 @@
 		<tr>
 			<th colspan="2">Courses:</th>
 		</tr>
-		<tr>
+
+	
 			<form:form modelAttribute="student"	action="${pageContext.request.contextPath}/student/doEnroll">
-				<c:forEach items="${allCourses}" var="course">
-					<tr colspan="2">
-						<form:checkbox path="courses" value="${course.id}" label="${course.id}" />
-						<c:out value="${course.name}" />
-					</tr>
-					
-				</c:forEach>
 				
-				<button type="submit">Update</button>
+				<c:forEach items="${allCourses}" var="course">
+					<tr><td>
+					<label class="container">${course.name}
+						<form:checkbox class="checkbox" path="courses" value="${course}" label="${course.name}" /><br>
+						<!c:out value="${course.name}" />
+						<span class="checkmark"></span>
+					</label>
+					</td></tr>										
+				</c:forEach>
+				<form:hidden path="id" valur="${student.id}"/>
+				<tr><td><button type="submit">Update</button></td></tr>
+				
 			</form:form>
-		</tr>
-	</table>
+		</table>
+				
 </body>
 </html>
