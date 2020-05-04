@@ -13,21 +13,16 @@ import packt.jee.course_management.controller.CourseController;
 import packt.jee.course_management.dto.CourseDTO;
 import packt.jee.course_management.entity.Course;
 
-public class CourseConverter implements Converter<String,CourseDTO>{
-		
-		
-		
-		@Override
-		public CourseDTO convert(String source) {
-			//System.out.println("Hello converter!");
-			//System.out.println(source);
-			CourseDTO courseDTO = new CourseDTO();
-			courseDTO.setId(Integer.parseInt(source));
-			return courseDTO;
-		}
+public class CourseConverter implements Converter<String, CourseDTO> {
 
-		
+	@Override
+	public CourseDTO convert(String source) {
+		CourseDTO courseDTO = new CourseDTO();
+		courseDTO.setId(Integer.parseInt(source));
+		return courseDTO;
 	}
+
+}
 
 
 	

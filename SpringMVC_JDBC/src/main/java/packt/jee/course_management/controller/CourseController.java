@@ -80,6 +80,8 @@ public class CourseController {
 	
 	@RequestMapping("/course/details/{id}")
 	public String courseDetails (@PathVariable int id, Model model) {
+		//Course course = new Course();
+		//Course 
 		Course course = entityService.getEntity(Course.class, id);
 		CourseDTO courseDTO = courseConverter(course);
 		model.addAttribute("course", courseDTO);
@@ -91,7 +93,6 @@ public class CourseController {
 		}
 		model.addAttribute("students", studentDTOs);
 		return "courseDetails";
-
 	}
 	
 	@RequestMapping("/course/delete/{id}")
@@ -102,11 +103,10 @@ public class CourseController {
 	}
 	
 	public Course courseConverter(CourseDTO courseDTO, boolean update) {
-		Course course;
+		Course course = new Course();
 		if (courseDTO.getId() == 0) {
-			course = new Course();
-			update = true;
-			
+			//course = new Course();
+			update = true;			
 		} else {
 			course = entityService.getEntity(Course.class, courseDTO.getId());			
 		}

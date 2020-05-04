@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
@@ -25,13 +26,14 @@ public class Student extends Person{
 	@Column(name="enrolled_since")
 	private Date enrolledsince;
 	
-	@ManyToMany(cascade = { MERGE, REFRESH })
+	@ManyToMany(cascade = { MERGE, REFRESH }, fetch = FetchType.EAGER)
 	@JoinTable(
 			name="course_student", 
 			joinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"), 
 			inverseJoinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id")
 	)
 	private List<Course> courses;
+	
 	
 	
 	public Date getEnrolledsince() {

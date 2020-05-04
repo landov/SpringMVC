@@ -51,7 +51,7 @@
 				<c:forEach items="${allCourses}" var="course">
 					<tr><td>
 					<label class="container">${course.name}
-						<form:checkbox class="checkbox" path="courses" value="${course}" label="${course.name}" /><br>
+						<form:checkbox class="checkbox" path="courses" value="${course}" /><br>
 						<!c:out value="${course.name}" />
 						<span class="checkmark"></span>
 					</label>

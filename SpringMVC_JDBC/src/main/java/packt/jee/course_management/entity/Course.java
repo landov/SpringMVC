@@ -9,9 +9,12 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
@@ -40,7 +43,12 @@ public class Course implements Serializable {
 	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH })
 	private Teacher teacher;
 	
-	@ManyToMany(cascade = { MERGE, REFRESH }, mappedBy = "courses")
+	@ManyToMany(cascade = { MERGE, REFRESH }, mappedBy = "courses", fetch = FetchType.EAGER)
+	@JoinTable(
+			name="course_student", 
+			joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"), 
+			inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id")
+	)
 	private List<Student> students;
 	
 	private int maxStudents;
@@ -123,7 +131,6 @@ public class Course implements Serializable {
 			int currentEnrolment = getSutdentsInCourse();
 			if (currentEnrolment >= getMaxStudents())
 			throw new EnrolmentFullException("Course if full. Enrolment closed");
-			
 	}
 	
 	public int getSutdentsInCourse() {

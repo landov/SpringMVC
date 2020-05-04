@@ -89,18 +89,19 @@ public class StudentController {
 	
 	@RequestMapping("/student/doEnroll")
 	public String doEnroll(@ModelAttribute("student") StudentDTO studentDTO) {
-		//System.out.println(courseDTOs.toString());
-		/*for (CourseDTO course : student.getCourses()) {
-			System.out.println(course.getName()+course.isChecked());
-		}*/
-		System.out.println(studentDTO.toString());
-		System.out.println(studentDTO.getId());
-		Student student = studentConverter(studentDTO, true);
-		// List<Course> courses = new ArrayList<Course>();
-		List<Course> courses = courseController.courseListConverter(studentDTO.getCourses(), false);
-		for (Course course : courses) {
-			System.out.println(course.getName());
+		Student student = studentConverter(studentDTO, false);
+		List<Course>  courses = entityService.getEntities(Course.class);
+		
+		// Ezt a két fort akartam elkerülni, de nélkülük nem ment
+		for (Course course :courses) {
+			course.getStudents().remove(student);
+			entityService.updateEntity(course);
 		}
+		courses = courseController.courseListConverter(studentDTO.getCourses(), false);
+		for (Course course : courses) {
+			course.getStudents().add(student);
+			entityService.updateEntity(course);
+		}	
 		student.setCourses(courses);
 		entityService.updateEntity(student);
 		return "redirect:/students";
@@ -116,7 +117,7 @@ public class StudentController {
 	private Student studentConverter(StudentDTO studentDTO, boolean update) {
 		Student student;
 		if (studentDTO.getId() == 0) {
-			student = new Student();			
+			student = new Student();		
 			update = true;
 		} else {
 			student = entityService.getEntity(Student.class, studentDTO.getId());			
