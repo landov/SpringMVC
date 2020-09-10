@@ -1,0 +1,291 @@
+@charset "UTF-8";
+/* Author Landov version: 1.0*/
+
+html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+
+
+body {
+	height: 100%;
+  background-color: DarkOliveGreen; 
+  font-family: "Book Antiqua", Palatino, serif;
+
+max-width: 1024px;
+font-size: 0.9em;
+
+}
+
+h1 {
+  background-color: NavajoWhite;
+  text-align: center;
+   border-radius: 5px;
+   font-size: 2.8em;
+   padding: 20px;
+}
+
+h2, h3, h4 {
+	color: NavajoWhite;
+}
+
+/* for small texts*/
+.notes{
+	line-height:0.8em;
+	padding: 0px;
+	color:DarkOliveGreen;
+	font-size: 0.7em;
+	margin-left: 2em;
+	
+}
+
+
+/* for errors*/
+h6{
+	background-color: red;
+	color: NavajoWhite;
+	padding: 1px 1px;
+}
+
+/* Style the top navigation bar */
+ul.topnav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 0.9em;
+}
+
+ul.topnav li{
+  float: left;
+}
+
+ul.topnav li a {
+  display: block;
+  padding: 8px;
+  color: DarkOliveGreen;
+  background-color: DarkSeaGreen;
+  margin-right: 2px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  text-decoration: none;
+}
+
+ul.topnav li a:hover:not(.active) {
+	color : black;
+	background-color: #ddd;
+;
+  
+}
+
+ul.topnav li a.active {
+	
+	color : black;
+  	background-color: NavajoWhite;
+  	border-top-left-radius: 5px;
+  	border-top-right-radius: 5px;
+  	
+}
+
+
+table {
+  border-collapse: collapse;
+  padding: 3px;
+  width: 100%;
+
+  /*overflow-x:auto;*/
+  background-color: White;
+
+}
+
+th, td {
+  padding: 5px;
+ /* border-bottom-style: dotted;
+  border-bottom-color: NavajoWhite;;
+  border-bottom-width: 1px;*/
+}
+
+.error {
+	height: 1em;
+}
+
+
+table a {
+  float: left;
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 3px 3px;
+  text-decoration: none;
+  border-radius: 5px;
+  background-color: DarkSeaGreen;
+
+}
+
+/* Change color on hover */
+table a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+
+
+
+a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+/* tr:nth-child(even){background-color: #f2f2f2} */
+
+th {
+	text-align: left;
+  background-color: NavajoWhite;
+
+  color: black;
+}
+
+tr:hover {background-color:#f5f5f5;}
+
+thead {
+
+    width: 100%;
+
+}
+	
+tbody {
+    height: 10px;       /* Just for the demo          */
+   width:100%;
+
+    overflow-y: scroll;    /* Trigger vertical scroll    */
+
+}
+
+
+input[type=text], input[type=password], select {
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: auto;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+
+button {
+  float: left;
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 5px 15px;
+  text-decoration: none;
+  background-color: DarkSeaGreen;
+  padding: 8px 14px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 5px;
+  font-family: "Book Antiqua", Palatino, serif;
+  font-size: 0.9em;
+
+}
+
+/* Change color on hover */
+button:hover {
+	
+  background-color: #ddd;
+  color: black;
+}
+
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: red;
+  color: white;
+  text-align: center;
+}
+
+/* The container */
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-family: "Book Antiqua", Palatino, serif;
+  font-size: 0.9em;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 18px;
+  width: 18px;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: DarkSeaGreen;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 5px;
+  top: 0px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
