@@ -8,8 +8,8 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org
 		<class>packt.jee.course_management.entity.Student</class>
 		<class>packt.jee.course_management.entity.Teacher</class>
 		<properties>
-			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.50.102/course_management"/>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.50.102/course_management?serverTimezone=UTC"/>
 			<property name="javax.persistence.jdbc.user" value="landov"/>
 			<property name="javax.persistence.jdbc.password" value="Kain5891"/>
 		</properties>
